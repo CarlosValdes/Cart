@@ -11,14 +11,30 @@ const Detail = () => {
   const dispatch = useDispatch();
   const [quantity, setQty]=useState(1)
 
+
+  const [inventario, setInv] = useState([])
+
+  const getInventory = () => {
+
+      axios.get(`http://185.239.238.174:8080/api/inventory/${sku}`)
+          .then((res) => {
+              console.log(res.data)
+              setInv(res.data)
+          })
+  }
+  useEffect(() => {
+      getInventory();
+  }, []);
+
+
   const getProductList=()=>{
     axios.get("http://127.0.0.1:8080/api/product")
     .then((res)=>{
       //console.log(res.data)
       //setProducts(res.data)
-      console.log(sku)
+      //console.log(sku)
       const findDetail=res.data.filter(product=>product.sku === sku);
-      console.log(findDetail)
+      //console.log(findDetail)
       if (findDetail.length>0)
         {
           setDetail(findDetail[0])
@@ -58,6 +74,7 @@ const Detail = () => {
         </div>
         <div className=' flex flex-col gap-5'>
           <h1 className='text-4xl uppercase font-bold'>{detail.name}</h1>
+          <h5 className=' uppercase font-bold'>Piezzas disponibles: {inventario}</h5>
           <p className='font-bold text-3xl'>${detail.price}</p>
           <div className='flex gap-5'>
             <div className='flex gap-2 justify-center items-center'>

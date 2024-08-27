@@ -5,7 +5,7 @@ import axios from 'axios'
 const Home = () => {
   const [productos,setProducts]=useState([])
   const getProductList=()=>{
-    axios.get("http://127.0.0.1:8080/api/product")
+    axios.get("http://185.239.238.174:8080/api/product")
     .then((res)=>{
       //console.log(res.data)
       setProducts(res.data)
